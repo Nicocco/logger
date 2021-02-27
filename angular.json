@@ -3,5 +3,46 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-  }
+    "ClicLogger": {
+      "projectType": "library",
+      "root": "projects/clic-logger",
+      "sourceRoot": "projects/clic-logger/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/clic-logger/tsconfig.lib.json",
+            "project": "projects/clic-logger/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/clic-logger/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/clic-logger/src/test.ts",
+            "tsConfig": "projects/clic-logger/tsconfig.spec.json",
+            "karmaConfig": "projects/clic-logger/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/clic-logger/tsconfig.lib.json",
+              "projects/clic-logger/tsconfig.spec.json"
+            ],
+            "exclude": [
+              "**/node_modules/**"
+            ]
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "ClicLogger"
 }
