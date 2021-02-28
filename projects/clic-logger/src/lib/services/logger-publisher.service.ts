@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
-import { LogConsole } from "./log-console.model";
-import { LogLocalStorage } from "./log-local-storage.model";
-import { LogPublisher } from "./log-publisher.base";
+import { LogConsole } from "../models/log-console.model";
+import { LogLocalStorage } from "../models/log-local-storage.model";
+import { LogPublisher } from "../class-base/log-publisher.base";
 
 @Injectable({providedIn: 'root'})
 export class LogPublishersService {

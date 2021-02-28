@@ -1,4 +1,4 @@
-import { LogLevel } from "./logger.enum";
+import { LogLevel } from "../enum/logger.enum";
 
 export class LogEntry {
 
@@ -33,6 +33,14 @@ export class LogEntry {
     }
 
     //#region ---------------------------- GETTERS ------------------------------
+
+    public get level(): LogLevel {
+      return this._level;
+    }
+
+    public get message(): string {
+      return this._message;
+    }
 
     //#endregion
 

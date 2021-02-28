@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
-import { LogEntry } from "./log-entry.model";
-import { LogPublisher } from "./log-publisher.base";
+import { LogPublisher } from "../class-base/log-publisher.base";
+import { LogLevel } from "../enum/logger.enum";
+import { LogEntry } from "../models/log-entry.model";
 import { LogPublishersService } from "./logger-publisher.service";
-import { LogLevel } from "./logger.enum";
 
 @Injectable({ providedIn: 'root' })
 export class LoggerService {
@@ -54,8 +54,7 @@ export class LoggerService {
 
     public clear(): void {
         for (let logger of this._logPublishers) {
-            logger.clear()
-                .subscribe(response => console.log(response));
+            logger.clear();
         }
     }
 
@@ -79,8 +78,7 @@ export class LoggerService {
             );
 
             for (let logger of this._logPublishers) {
-                logger.log(entry)
-                    .subscribe(response => console.log(response));
+                logger.log(entry);
             }
         }
     }

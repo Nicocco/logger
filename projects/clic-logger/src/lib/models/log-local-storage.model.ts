@@ -1,14 +1,14 @@
 import { Observable, of } from "rxjs";
 import { LogEntry } from "./log-entry.model";
-import { LogPublisher } from "./log-publisher.base";
+import { LogPublisher } from "../class-base/log-publisher.base";
 
 export class LogLocalStorage extends LogPublisher {
-    constructor() {
+    constructor(keyName: string = 'logs') {
         super();
-        this.location = "logging";
+        this.location = keyName;
     }
 
-    public log(entry: LogEntry): Observable<boolean> {
+    public log(entry: LogEntry): void {
         let sucess: boolean = false;
         let currentLogs: Array<LogEntry> = new Array<LogEntry>();
 
@@ -23,7 +23,6 @@ export class LogLocalStorage extends LogPublisher {
         } catch (ex) {
             console.warn(ex);
         }
-        return of(sucess);
     }
 
     public clear(): Observable<boolean> {

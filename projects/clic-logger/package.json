@@ -1,6 +1,6 @@
 {
-  "name": "clic-logger",
-  "version": "0.0.1",
+  "name": "@lgm-clic/logger",
+  "version": "1.0.0",
   "peerDependencies": {
     "@angular/common": "^11.0.9",
     "@angular/core": "^11.0.9"
