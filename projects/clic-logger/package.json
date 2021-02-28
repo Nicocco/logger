@@ -1,9 +1,11 @@
 {
   "name": "@lgm-clic/logger",
   "version": "1.0.0",
+  "private": false,
   "peerDependencies": {
     "@angular/common": "^11.0.9",
-    "@angular/core": "^11.0.9"
+    "@angular/core": "^11.0.9",
+    "date-fns": "^2.17.0"
   },
   "dependencies": {
     "tslib": "^2.0.0"

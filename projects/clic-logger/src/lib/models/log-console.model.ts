@@ -5,26 +5,28 @@ import { LoggerColorSchema } from "../constants/logger-constant.constant";
 
 export class LogConsole extends LogPublisher {
 
+  constructor() { super(); }
+
   public log(entry: LogEntry): void {
     switch (entry.level) {
       case LogLevel.WARN: {
-        console.log("%c" + entry.buildLogString(), LoggerColorSchema.WARN);
+        this._displayLog(entry, LoggerColorSchema.WARN);
         break;
       }
       case LogLevel.INFO: {
-        console.log("%c" + entry.buildLogString(), LoggerColorSchema.INFO);
+        this._displayLog(entry, LoggerColorSchema.INFO);
         break;
       }
       case LogLevel.ERROR: {
-        console.log("%c" + entry.buildLogString(), LoggerColorSchema.ERROR);
+        this._displayLog(entry, LoggerColorSchema.ERROR);
         break;
       }
       case LogLevel.FATAL: {
-        console.log("%c" + entry.buildLogString(), LoggerColorSchema.FATAL);
+        this._displayLog(entry, LoggerColorSchema.FATAL);
         break;
       }
       case LogLevel.DEBUG :{
-        console.log("%c" + entry.buildLogString(), LoggerColorSchema.DEBUG);
+        this._displayLog(entry, LoggerColorSchema.DEBUG);
         break;
       }
       default: {
@@ -35,5 +37,18 @@ export class LogConsole extends LogPublisher {
 
   public clear(): void {
     console.clear();
+  }
+
+  private _displayLog(entry: LogEntry, colorSchema: string): void {
+    if (entry.extraInfo !== undefined
+      && entry.extraInfo !== null
+      && entry.extraInfo.length > 0) {
+        console.groupCollapsed("%c" + entry.buildLogString(), colorSchema);
+        entry.extraInfo.forEach((info: any) => { console.log(info); });
+        console.groupEnd();
+      } else {
+        console.log("%c" + entry.buildLogString(), colorSchema);
+
+      }
   }
 }

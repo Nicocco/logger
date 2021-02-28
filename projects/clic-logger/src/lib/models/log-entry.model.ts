@@ -1,4 +1,5 @@
 import { LogLevel } from "../enum/logger.enum";
+import { format } from 'date-fns'
 
 export class LogEntry {
 
@@ -42,6 +43,10 @@ export class LogEntry {
       return this._message;
     }
 
+    public get extraInfo(): Array<any> {
+      return this._extraInfo;
+    }
+
     //#endregion
 
     //#region ---------------------------- METHODES -----------------------------
@@ -49,29 +54,14 @@ export class LogEntry {
     public buildLogString(): string {
         let logValue: string = "";
         if (this._logWithDate) {
-            logValue = new Date() + " - ";
+            logValue += "["
+            + format(new Date(), 'HH:mm:ss.SSS')
+            + "] ";
         }
-        logValue += "Type: " + LogLevel[this._level];
-        logValue += " - Message: " + this._message;
-        if (this._extraInfo.length) {
-            logValue += " - Extra Info: "
-                + this._formatParams(this._extraInfo);
-        }
+        logValue += LogLevel[this._level];
+        logValue += " : " + this._message;
 
         return logValue;
-    }
-
-    private _formatParams(params: any[]): string {
-        let formatedParams: string = params.join(",");
-
-        if (params.some(p => typeof p == "object")) {
-            formatedParams = "";
-            for (let item of params) {
-                formatedParams += JSON.stringify(item) + ",";
-            }
-        }
-
-        return formatedParams;
     }
 
     //#endregion

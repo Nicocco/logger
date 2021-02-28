@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { LogPublisher } from "../class-base/log-publisher.base";
 import { LogLevel } from "../enum/logger.enum";
+import { LogConsole } from "../models/log-console.model";
 import { LogEntry } from "../models/log-entry.model";
-import { LogPublishersService } from "./logger-publisher.service";
+import { LogLocalStorage } from "../models/log-local-storage.model";
 
 @Injectable({ providedIn: 'root' })
 export class LoggerService {
@@ -11,7 +12,9 @@ export class LoggerService {
     //                                ATTRIBUTS
     //=========================================================================
 
-    private _logPublishers: Array<LogPublisher> = new Array<LogPublisher>();
+    private _logPublishers: Array<LogPublisher> = [
+        new LogConsole() as unknown as LogPublisher
+    ];
     private _logLevel: LogLevel = LogLevel.ALL;
     private _logWithDate: boolean = true;
 
@@ -22,9 +25,19 @@ export class LoggerService {
     //                                METHODES
     //=========================================================================
 
-    constructor(private readonly logPublisher: LogPublishersService) {
-        this._logPublishers = this.logPublisher.publishers;
+    constructor() { }
+
+    //#region -------------------- PUBLIC LOGGING METHODES --------------------
+
+
+    public set logLevel(newValue: LogLevel) {
+        if (newValue !== undefined && newValue !== null && this._logLevel !== newValue) {
+            this._logLevel = newValue;
+            console.log("LOG LEVEL SET TO " + LogLevel[newValue]);
+        }
     }
+
+    //#endregion
 
     //#region -------------------- PUBLIC LOGGING METHODES --------------------
 
@@ -60,15 +73,38 @@ export class LoggerService {
 
     //#endregion
 
-    //#region ------------------------ LOGGING METHODES -----------------------
+    //#region -------------------------- OTHER METHODES -------------------------
 
+    public addLoggerPublisher(...loggerPublisher: Array<LogPublisher>): Array<LogPublisher> {
+        this._logPublishers.push(...loggerPublisher);
+        return this._logPublishers;
+    }
+
+    public setLogLevel(newValue: LogLevel): void {
+        if (newValue !== undefined && newValue !== null && this._logLevel !== newValue) {
+            this._logLevel = newValue;
+            console.log("LOG LEVEL SET TO " + LogLevel[newValue]);
+        }
+    }
+
+    public enableDefaultLocalStorageLogs(): void {
+        this._logPublishers.push(new LogLocalStorage());
+    }
+
+    public disableDefaultLocalStorageLogs(): void {
+        const localStorageLogger: LogPublisher | undefined
+            = this._logPublishers.find(publisher => typeof publisher === LogLocalStorage.name);
+        if (localStorageLogger !== undefined) {
+            this._logPublishers.splice(this._logPublishers.indexOf(localStorageLogger), 1);
+        }
+    }
 
     private _shouldLog(level: LogLevel): boolean {
         return (level >= this._logLevel && level !== LogLevel.OFF)
             || this._logLevel === LogLevel.ALL;
     }
 
-    private _writeToLog(msg: string, level: LogLevel, params: any[]) {
+    private _writeToLog(msg: string, level: LogLevel, params: any[]): void {
         if (this._shouldLog(level)) {
             let entry: LogEntry = new LogEntry(
                 msg,
