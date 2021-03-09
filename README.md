@@ -1,27 +1,61 @@
-# LoggerWorkspace
+# @lgm-clic/logger
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.0.6.
+This project was created to provide a colorfull, strong typed and extendable logger for angular APP
 
-## Development server
+## usage
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+*@lgm-clic/logger* comes as an injectable service. You can directly use it by setting it up in appComponent.ts constructor, and then inject it wherever you want.
 
-## Code scaffolding
+```ts
+import { LoggerService } from "@lgm-clic/logger";
+import { LogLevel } from "@lgm-clic/logger";
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+constructor(private readonly _logger: LoggerService) {
+  this._logger.setLogLevel(LogLevel.DEBUG);
+  this._logger.enableDefaultLocalStorageLogs();
+}
+```
 
-## Build
+As a service, the configuration need to be done at the very top level, and not reset in other component.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+## extend
 
-## Running unit tests
+*@lgm-clic/logger* is extendable. By default, the logger write in console. It has a buildin publisher for localstorage that can be enable by calling :
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+```ts
+this._logger.enableDefaultLocalStorageLogs();
+```
 
-## Running end-to-end tests
+and disable by calling 
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+```ts
+this._logger.disableDefaultLocalStorageLogs();
+```
+
+The ***LogPublisher*** abstract class let you create your own publisher.
+
+```ts
+public class MyCustomeLogger extends LogPublisher {
+  constructor() { super(); }
+
+  public log(entry: LogEntry): void {
+    // your log logic and direction
+  }
+
+  pubic clear(): void {
+    //your clear logic
+  }
+}
+```
+
+With such a class, you can log into a file, an API, ect. Just make your log logic according to LogLevel in the implementation of the log function.
+
+Then, register your custome LoggerPublisher to the loggerService like so :
+
+```ts
+this._logger.addLoggerPublisher(new MyCustomLogger())
+```
 
 ## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To get more help, contact the CLIC's packages owner of LGM

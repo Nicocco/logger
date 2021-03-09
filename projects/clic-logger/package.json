@@ -1,6 +1,8 @@
 {
   "name": "@lgm-clic/logger",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "description": "Logger that provide a colorfull, strong typed and extendable logger for angular APP",
+  "author": {"name": "Nicolas MORISSEAU"},
   "private": false,
   "peerDependencies": {
     "@angular/common": "^11.0.9",

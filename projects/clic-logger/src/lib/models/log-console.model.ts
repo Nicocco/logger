@@ -25,7 +25,8 @@ export class LogConsole extends LogPublisher {
         this._displayLog(entry, LoggerColorSchema.FATAL);
         break;
       }
-      case LogLevel.DEBUG :{
+      case LogLevel.DEBUG:
+      case LogLevel.ALL: {
         this._displayLog(entry, LoggerColorSchema.DEBUG);
         break;
       }
@@ -43,12 +44,12 @@ export class LogConsole extends LogPublisher {
     if (entry.extraInfo !== undefined
       && entry.extraInfo !== null
       && entry.extraInfo.length > 0) {
-        console.groupCollapsed("%c" + entry.buildLogString(), colorSchema);
-        entry.extraInfo.forEach((info: any) => { console.log(info); });
-        console.groupEnd();
-      } else {
-        console.log("%c" + entry.buildLogString(), colorSchema);
+      console.groupCollapsed("%c" + entry.buildLogString(), colorSchema);
+      entry.extraInfo.forEach((info: any) => { console.log(info); });
+      console.groupEnd();
+    } else {
+      console.log("%c" + entry.buildLogString(), colorSchema);
 
-      }
+    }
   }
 }
