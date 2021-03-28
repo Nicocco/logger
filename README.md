@@ -58,4 +58,4 @@ this._logger.addLoggerPublisher(new MyCustomLogger())
 
 ## Further help
 
-To get more help, contact the CLIC's packages owner of LGM
+To get more help, contact the packages owner
