@@ -1,5 +1,5 @@
 {
-  "name": "@lgm-clic/logger",
+  "name": "@la-clic/logger",
   "version": "1.0.0-rc.1",
   "description": "Logger that provide a colorfull, strong typed and extendable logger for angular APP",
   "author": {
