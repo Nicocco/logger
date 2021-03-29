@@ -4,11 +4,11 @@ This project was created to provide a colorfull, strong typed and extendable log
 
 ## usage
 
-*@lgm-clic/logger* comes as an injectable service. You can directly use it by setting it up in appComponent.ts constructor, and then inject it wherever you want.
+*@la-clic/logger* comes as an injectable service. You can directly use it by setting it up in appComponent.ts constructor, and then inject it wherever you want.
 
 ```ts
-import { LoggerService } from "@lgm-clic/logger";
-import { LogLevel } from "@lgm-clic/logger";
+import { LoggerService } from "@la-clic/logger";
+import { LogLevel } from "@la-clic/logger";
 
 constructor(private readonly _logger: LoggerService) {
   this._logger.setLogLevel(LogLevel.DEBUG);
@@ -20,7 +20,7 @@ As a service, the configuration need to be done at the very top level, and not r
 
 ## extend
 
-*@lgm-clic/logger* is extendable. By default, the logger write in console. It has a buildin publisher for localstorage that can be enable by calling :
+*@la-clic/logger* is extendable. By default, the logger write in console. It has a buildin publisher for localstorage that can be enable by calling :
 
 ```ts
 this._logger.enableDefaultLocalStorageLogs();
@@ -58,4 +58,4 @@ this._logger.addLoggerPublisher(new MyCustomLogger())
 
 ## Further help
 
-To get more help, contact the CLIC's packages owner of LGM
+To get more help, contact the CLIC packages owner
