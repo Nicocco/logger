@@ -1,4 +1,4 @@
-# @lgm-clic/logger
+# @la-clic/logger
 
 This project was created to provide a colorfull, strong typed and extendable logger for angular APP
 
